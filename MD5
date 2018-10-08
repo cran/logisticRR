@@ -1,0 +1,17 @@
+062aa30826af45bb64d64f5cb91d4dfa *DESCRIPTION
+d32239bcb673463ab874e80d47fae504 *LICENSE
+f6b22755761c98469cfca65b17437bf3 *NAMESPACE
+5c738a223f836dfeca4c3a86ecea44f7 *R/logisticRR.R
+1c38a82ede404d77ed4008fc213175ae *R/nominalRR.R
+7ddba01f446ebd98636b2a22729e0d6a *README.md
+34c904390958b1e30b62c5d42f982505 *build/vignette.rds
+f3f63ccb11145aa490b9a0fcf6e10dab *inst/doc/logisticRR.R
+271fd437716e975d858ac0b2884d33c4 *inst/doc/logisticRR.Rmd
+5c23577c0773a0a2a4eacebeffd06935 *inst/doc/logisticRR.html
+a5a7050a6b59f9a9453da4ba8135e126 *man/logisticRR.Rd
+bf6f099a6c4c0367a34f11dd824882b2 *man/nominalRR.Rd
+42813dc1c38b042481b43878681d23b8 *man/printRR.Rd
+91aac678a0b922f1b2310cc69ac16d1e *man/printnRR.Rd
+501573d26cb3f321b4fd1ef35aa94a7a *tests/testthat.R
+6bc0c7ab32d1b1d08727ce7a999acb2a *tests/testthat/testglm.R
+271fd437716e975d858ac0b2884d33c4 *vignettes/logisticRR.Rmd
