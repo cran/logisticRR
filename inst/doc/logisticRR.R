@@ -120,6 +120,29 @@ for(p in 1:6){
 abline(h = exp(coefficients(results2[[1]]$fit)[2]), col = "red", lwd = 2)
 
 ## ------------------------------------------------------------------------
+library(logisticRR)
+dat$multiY <- ifelse(dat$X == 1, rbinom(n, 1, 0.8) + dat$Y, rbinom(n, 1, 0.2) + dat$Y)
+multiresult <- multiRR(multiY ~ X + W + Z, data = dat, boot = TRUE, n.boot = 1000)
+apply(multiresult$boot.rr, 2, sd)
+sqrt(multiresult$delta.var)
+
+## relative risk ratio (RRR)
+print(multiresult$RRR)
+
+## relative risk (RR)
+print(multiresult$RR)
+
+## ------------------------------------------------------------------------
+multinresult <- multinRR(multiY ~ W + X + Z, data = dat, basecov = 0, comparecov = 1, boot = TRUE, n.boot = 1000)
+apply(multinresult$boot.rr, 2, sd)
+sqrt(multinresult$delta.var)
+
+## relative risk ratio (RRR)
+print(multinresult$RRR)
+## relative risk (RR)
+print(multinresult$RR)
+
+## ------------------------------------------------------------------------
 data("airquality")
 
 ## ------------------------------------------------------------------------
