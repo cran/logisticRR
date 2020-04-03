@@ -4,8 +4,15 @@
 \alias{nominalRR}
 \title{Calculate adjusted relative risks under nominal exposure variable}
 \usage{
-nominalRR(formula, basecov = NULL, comparecov = NULL, fixcov = NULL,
-  data, boot = FALSE, n.boot = 100)
+nominalRR(
+  formula,
+  basecov = NULL,
+  comparecov = NULL,
+  fixcov = NULL,
+  data,
+  boot = FALSE,
+  n.boot = 100
+)
 }
 \arguments{
 \item{formula}{a formula term that is passed into \code{glm()} having a form of \code{response ~ terms} where \code{response} is binary response vector and \code{terms} is a collection of terms connected by \code{'+'}. The first term of predictors will be used as a predictor of interest to calculate relative risks with respect to response variable.}

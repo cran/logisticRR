@@ -4,8 +4,7 @@
 \alias{multiRR}
 \title{Inference on relative risk under multinomial logistic regression}
 \usage{
-multiRR(formula, basecov = 0, fixcov = NULL, data, boot = FALSE,
-  n.boot = 100)
+multiRR(formula, basecov = 0, fixcov = NULL, data, boot = FALSE, n.boot = 100)
 }
 \arguments{
 \item{formula}{a formula term that is passed into \code{multinom()} where response should be a factor having \code{K} different levels. Every term appearing in the formula should be well-defined as a column of \code{data}. Reference response should be specified as the first level.}

@@ -44,7 +44,7 @@ printmRR <- function(formula, basecov = 0, fixcov = NULL, data){
   } else if (p > 0) {
     ## if values of other confounders are not specified, set them all zeros.
     newfixcov <- t(as.matrix(rep(0, p)))
-    subdat = as.data.frame( data[,which(names(data) %in% varnames[-1])] )
+    subdat = as.data.frame( data[,which(names(data) %in% varnames[-1])])
     tmp <-  which(apply(subdat, 2, class)!="numeric")
     for (q in 1:p) {
       if(class(subdat[,q]) == "factor"){

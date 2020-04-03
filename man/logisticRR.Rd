@@ -4,8 +4,14 @@
 \alias{logisticRR}
 \title{Calculate adjusted relative risks}
 \usage{
-logisticRR(formula, basecov = 0, fixcov = NULL, data, boot = FALSE,
-  n.boot = 100)
+logisticRR(
+  formula,
+  basecov = 0,
+  fixcov = NULL,
+  data,
+  boot = FALSE,
+  n.boot = 100
+)
 }
 \arguments{
 \item{formula}{a formula term that is passed into \code{glm()} having a form of \code{response ~ terms} where \code{response} is binary response vector and \code{terms} is a collection of terms connected by \code{'+'}. The first term of predictors will be used as a predictor of interest to calculate relative risks with respect to response variable.}

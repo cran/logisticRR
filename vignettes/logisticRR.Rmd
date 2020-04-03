@@ -158,7 +158,7 @@ head(dat)
 The code below estimates variance of adjusted relative risks of binary $X$ on binary outcome of $Y$ by generating `n.boot = 200` bootstrap samples. Because we do not specify baseline level of exposure variable (`basecov`) nor the value of conditioning covariates of `W` and `Z` (`fixcov`), baseline exposure level is set to `0` as default. Since `W` and `Z` are
 both factor, they are fixed to their first level which are `0` and `female`. 
 
-```{r}
+```
 simresult200 <- logisticRR(Y ~ X + W + Z, data = dat, boot = TRUE, n.boot = 200)
 simresult200$RR
 var(simresult200$boot.rr)
@@ -170,7 +170,7 @@ simresult200$fix.cov
 
 This time we increase the number of bootstrap samples to `n.boot = 1000`. Note that sampling variance gets closer to the estimated variance using Delta method (`delta.var`).
 
-```{r}
+```
 simresult1000 <- logisticRR(Y ~ X + W + Z, data = dat, boot = TRUE, n.boot = 1000)
 var(simresult1000$boot.rr)
 simresult1000$delta.var
@@ -181,7 +181,7 @@ simresult1000$delta.var
 
 We have a total of six combination of confounder variables. By the assumption made in logistic regression, adjusted odds ratio is consistent against of these confounders but adjusted relative risk is not.
 
-```{r}
+```
 levels(dat$W)
 levels(dat$Z)
 adjusted <- cbind(rep(levels(dat$W), 2), rep(levels(dat$Z), each = 3))
@@ -191,7 +191,7 @@ names(adjusted) <- c("W", "Z")
 
 Adjusted relative risk tends to be higher for male and for higher level of `W`.
 
-```{r}
+```
 ## compare with odds ratio 
 results <- list()
 for(i in 1:nrow(adjusted)){
@@ -221,7 +221,7 @@ print(exp(coefficients(results[[1]]$fit)[2]))
 
 Let us change the prevalence of exposure variable ($X$). 
 
-```{r}
+```
 dat2 <- dat 
 dat2$Y <- ifelse(dat$Y == 1, rbinom(n, 1, 0.2), rbinom(n, 1, 0.01))
 ## compare with odds ratio 
@@ -251,7 +251,7 @@ print(exp(coefficients(results2[[1]]$fit)[2]))
 ```
 
 
-```{r, fig.width=8, fig.height=6, fig.cap = "\\label{fig:figs} Plotting the distribution of adjusted relative risks for each combination of confounders. Each black dot denotes point estimate of adjusted relative risk and red horizontal line denotes adjusted odds ratio which is independent of the levels of confounders.", echo = FALSE}
+```
 RRboot = data.frame(rr = c(results2[[1]]$boot.rr, results2[[2]]$boot.rr, results2[[3]]$boot.rr, 
                  results2[[4]]$boot.rr, results2[[5]]$boot.rr, results2[[6]]$boot.rr),
                Z = c(rep("female", 3000), rep("male", 3000)),
@@ -281,7 +281,7 @@ abline(h = exp(coefficients(results2[[1]]$fit)[2]), col = "red", lwd = 2)
 When reponse variable takes more than two values, multinomial logistic regression is widely used to reveal association between the response variable and exposure variable. In that case, relative risk of each category compared to the reference category can be considered, conditional on other fixed covariates. Other than (adjusted) relative risk, relative risks ratio (RRR) is often of interest in multinomial logistic regression.
 
 
-```{r}
+```
 library(logisticRR)
 dat$multiY <- ifelse(dat$X == 1, rbinom(n, 1, 0.8) + dat$Y, rbinom(n, 1, 0.2) + dat$Y)
 multiresult <- multiRR(multiY ~ X + W + Z, data = dat, boot = TRUE, n.boot = 1000)
@@ -297,7 +297,7 @@ print(multiresult$RR)
 
 Similar to the binary reponse, in multinomial logistic regression model, categorical exposure variable can be introduced; in this case, baseline value and comparative value of exposure variable should be specified. 
 
-```{r}
+```
 multinresult <- multinRR(multiY ~ W + X + Z, data = dat, basecov = 0, comparecov = 1, boot = TRUE, n.boot = 1000)
 apply(multinresult$boot.rr, 2, sd)
 sqrt(multinresult$delta.var)
@@ -313,14 +313,14 @@ print(multinresult$RR)
 
 We introduce [`airquality`](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/airquality.html) data to illustrate the use of `logisticRR`. You can download the data set by :
 
-```{r}
+```
 data("airquality")
 ```
 
 Because outcome variable of `Ozone` is continuous, we are going to binarize this variable into `ozone1` (top 10\% take 1 and 0 otherwise), `ozone2` (top 20\% take 1 and 0 otherwise), and `ozone3` (top 30\% take 1 and 0 otherwise).  
 
 
-```{r}
+```
 # delete observations having NAs 
 ozonedat <- na.omit(airquality)
 # define binary ozone level
@@ -331,7 +331,7 @@ ozonedat$ozone3 <- ifelse(ozonedat$Ozone < quantile(ozonedat$Ozone, prob = 0.3),
 
 As an exposure variable of main interest, we use numerical `Temp` (temperature). Because a range of `Temp` is wide we devide it by 10 and use `Temp2` in the model so that one unit change of `Temp2` is ten unit (10 Fahrenheit) in `Temp`.
 
-```{r}
+```
 summary(ozonedat$Temp)
 ozonedat$Temp2 <- ozonedat$Temp / 10
 summary(ozonedat$Temp2)
@@ -339,7 +339,7 @@ summary(ozonedat$Temp2)
 
 As other confounding variables, we chose solar radiation (`Solar.R`) and average wind speed (`Wind`) so that `formula` used for `glm` is `ozone1 ~ Temp2 + Solar.R + Wind`, for example. We specify conditioning confounder values as an average of each variable by `fixcov = data.frame(Solar.R = mean(ozonedat$Solar.R), Wind = mean(ozonedat$Wind))`.
 
-```{r}
+```
 ozone.fit1 <- logisticRR(ozone1 ~ Temp2 +  Solar.R + Wind, data = ozonedat, basecov = min(ozonedat$Temp2),
                         fixcov = data.frame(Solar.R = mean(ozonedat$Solar.R), Wind = mean(ozonedat$Wind)), 
                         boot = FALSE)
@@ -355,7 +355,7 @@ ozone.fit3 <- logisticRR(ozone3 ~ Temp2 +  Solar.R + Wind, data = ozonedat, base
 
 As prevalence of outcome is smaller (`ozone1` < `ozone2` < `ozone3`), estimated adjusted relative risk is closer to adjusted odds ratio.
 
-```{r}
+```
 print(c(ozone.fit1$RR, ozone.fit2$RR, ozone.fit3$RR))
 
 ## odds ratio
@@ -366,7 +366,7 @@ Next we are going to use `nominalRR` when an exposure variable is converted into
 
 Note that adjusted relative risk when `basecov = "low", comparecov = "medium"` is the reciprocal of that when `basecov = "medium", comparecov = "low"`. 
 
-```{r}
+```
 # define binary ozone level
 ozonedat$ozone1 <- ifelse(ozonedat$Ozone < quantile(ozonedat$Ozone, prob = 0.1), 1, 0)
 ozonedat$Temp.factor <- ifelse(ozonedat$Temp <= quantile(ozonedat$Temp, prob = 0.25), "low",
